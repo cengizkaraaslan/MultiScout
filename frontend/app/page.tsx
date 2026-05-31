@@ -47,7 +47,7 @@ type PlatformKey =
   | "hepsi" | "amazon" | "trendyol" | "hepsiburada" | "n11"
   | "pazarama" | "ciceksepeti" | "vatan" | "teknosa" | "decathlon" | "steam" | "mediamarkt" | "defacto" | "gratis"
   | "a101" | "bim" | "sok" | "migros" | "carrefoursa" | "tarimkredi"
-  | "hakmarexpress" | "macrocenter" | "bizimtoptan" | "peynircibaba"
+  | "hakmarexpress" | "macrocenter" | "bizimtoptan" | "peynircibaba" | "burgerking"
   | "lcwaikiki" | "koton" | "mavi"
   | "boyner" | "penti" | "watsons" | "dr"
   | "karaca" | "englishhome" | "idefix" | "tchibo"
@@ -89,6 +89,7 @@ const PLATFORM_LABELS: Record<PlatformKey, string> = {
   macrocenter: "Macrocenter",
   bizimtoptan: "Bizim Toptan",
   peynircibaba: "Peynirci Baba",
+  burgerking: "Burger King",
   lcwaikiki: "LC Waikiki",
   koton: "Koton",
   mavi: "Mavi",
@@ -140,6 +141,7 @@ const ALL_PLATFORM_KEYS: PlatformKey[] = [
   "pazarama", "ciceksepeti", "vatan", "teknosa", "decathlon", "steam", "mediamarkt", "defacto", "gratis",
   "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
   "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
+  "burgerking",
   "lcwaikiki", "koton", "mavi",
   "boyner", "penti", "watsons", "dr",
   "karaca", "englishhome", "idefix", "tchibo",
@@ -717,6 +719,14 @@ export default function Home() {
               </>
             )}
           </motion.button>
+
+          <a
+            href="/kampanyalar"
+            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold text-white bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:shadow-md transition shrink-0"
+            title="1+1 bedava ve restoran kampanyaları"
+          >
+            🎁 Kampanyalar
+          </a>
 
           <LanguageToggle />
           <ThemeToggle />

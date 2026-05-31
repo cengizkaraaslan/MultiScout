@@ -183,6 +183,13 @@ PEYNIRCIBABA_CATEGORY_URLS = {
     "gurme-urunler": "https://www.peynircibaba.com/gurme-urunler/",
 }
 
+# Burger King — kampanya sayfası tek bir liste döner; "kategori" alanı
+# scraper içinde title+desc'ten otomatik tahmin edilir (kombo-menu,
+# ikili-firsat, 1plus1-bedava, kahvalti vb.). Bu nedenle map tek girdi.
+BURGERKING_CATEGORY_URLS = {
+    "kampanya": "https://www.burgerking.com.tr/kampanyalar",
+}
+
 GRATIS_CATEGORY_URLS = {
     # ── parfüm & deodorant (cinsiyet × tip) ──
     "kadin-parfum": "https://www.gratis.com/search?q=kadın+parfüm",

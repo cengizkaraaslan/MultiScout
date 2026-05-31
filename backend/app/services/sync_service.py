@@ -28,6 +28,7 @@ PLATFORM_FILES = {
     "macrocenter": "data/deals_macrocenter.json",
     "bizimtoptan": "data/deals_bizimtoptan.json",
     "peynircibaba": "data/deals_peynircibaba.json",
+    "burgerking": "data/deals_burgerking.json",
     "lcwaikiki": "data/deals_lcwaikiki.json",
     "koton": "data/deals_koton.json",
     "mavi": "data/deals_mavi.json",

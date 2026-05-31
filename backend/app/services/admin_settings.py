@@ -18,6 +18,7 @@ DEFAULTS: dict[str, Any] = {
         "carrefoursa": True, "tarimkredi": True,
         "hakmarexpress": True, "macrocenter": True, "bizimtoptan": True,
         "peynircibaba": True,
+        "burgerking": True,
         "lcwaikiki": True, "koton": True, "mavi": True,
         "boyner": True, "penti": True, "watsons": True, "dr": True,
         "karaca": True, "englishhome": False, "idefix": True, "tchibo": True,
@@ -65,6 +66,12 @@ DEFAULTS: dict[str, Any] = {
                 "interval_min": 30,
                 "min_discount": 0,
                 "platforms": ["a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi", "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba", "tchibo"],
+            },
+            "campaigns": {
+                "enabled": True,
+                "interval_min": 360,
+                "min_discount": 0,
+                "platforms": ["burgerking"],
             },
             "fashion": {
                 "enabled": True,

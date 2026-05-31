@@ -296,6 +296,82 @@ def get_deals(platform: str = Query("amazon"), category: str = Query(None), min_
         return {"status": "error", "message": str(e)}
 
 
+CAMPAIGN_PLATFORMS = {"burgerking"}
+
+# BOGO başlıklarını yakala — "1 alana 1 bedava", "ikincisi bedava",
+# "1+1 hediye", "2 al 1 öde" gibi varyasyonlar.
+import re as _re
+_BOGO_RE = _re.compile(
+    r"(?:alana?|al)\s*\d+\s*bedava|"
+    r"ikincisi\s+bedava|"
+    r"\b[123]\s*\+\s*1\b|"
+    r"\b\d+\s*al\s*\d+\s*[ödeöde]+|"
+    r"hediye(?:li)?\b|"
+    r"bedava\b",
+    _re.IGNORECASE,
+)
+
+
+@router.get("/campaigns")
+def get_campaigns(
+    bogo_only: bool = Query(False),
+    limit: int = Query(60),
+    db: Session = Depends(get_db),
+):
+    """Kampanyalar sayfası kaynağı. İki kaynaktan beslenir:
+
+    1. Kampanya-yönelimli platformlar (burgerking vb.) — tüm dealları
+    2. Mevcut market scraperlarındaki ürünler — başlığında BOGO/hediye
+       deseni geçenler (1 alana 1 bedava, ikincisi bedava, hediyeli, 2+1)
+
+    bogo_only=true ise sadece BOGO/hediye deseni geçenler döner.
+    """
+    try:
+        from app.services.admin_settings import enabled_stores
+        enabled = set(enabled_stores())
+
+        # 1) Kampanya-platformları
+        campaign_q = db.query(Deal).filter(Deal.platform.in_(CAMPAIGN_PLATFORMS & enabled))
+        campaign_rows = campaign_q.order_by(Deal.last_updated.desc()).limit(limit).all()
+
+        # 2) Market dealları içinde BOGO başlık deseni
+        market_platforms = {
+            "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
+            "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
+        } & enabled
+        bogo_rows: list[Deal] = []
+        if market_platforms:
+            q = db.query(Deal).filter(Deal.platform.in_(market_platforms))
+            for r in q.order_by(Deal.last_updated.desc()).limit(800).all():
+                title = (r.title or "")
+                if _BOGO_RE.search(title):
+                    bogo_rows.append(r)
+                    if len(bogo_rows) >= limit:
+                        break
+
+        def _tag(r: Deal, kind: str) -> dict:
+            return {
+                "title": r.title,
+                "price": r.price,
+                "discount_percentage": r.discount_percentage,
+                "link": r.link,
+                "image": r.image,
+                "category": r.category,
+                "platform": r.platform,
+                "campaign_kind": kind,
+                "last_updated": r.last_updated.isoformat() if r.last_updated else None,
+            }
+
+        out: list[dict] = []
+        if not bogo_only:
+            out.extend(_tag(r, "kampanya") for r in campaign_rows)
+        out.extend(_tag(r, "bogo") for r in bogo_rows)
+
+        return {"status": "success", "data": out, "total": len(out)}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
 @router.post("/deals-cleanup-json", dependencies=[Depends(require_api_key)])
 def cleanup_json_duplicates(platform: str = Query("all"), db: Session = Depends(get_db)):
     try:

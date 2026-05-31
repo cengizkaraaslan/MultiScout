@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.cscdn.net" },
       { protocol: "https", hostname: "**.peynircibaba.com" },
       { protocol: "https", hostname: "**.peynircibaba.com.tr" },
+      { protocol: "https", hostname: "**.burgerking.com.tr" },
       { protocol: "https", hostname: "**.decathlon.com.tr" },
       { protocol: "https", hostname: "**.decathlon.media" },
       { protocol: "https", hostname: "**.steamstatic.com" },
