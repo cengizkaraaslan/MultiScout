@@ -34,6 +34,10 @@ SCRAPE_ALL_STATUS = {
     "vodafone": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "turkcell": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "turktelekom": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "maximum": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "bonus": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "world": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "axess": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "lcwaikiki": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "koton": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "mavi": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
@@ -128,6 +132,10 @@ async def run_platform_scrape(platform: str, min_discount: int):
     from app.scrapers.vodafone_scraper import scrape_vodafone_deals
     from app.scrapers.turkcell_scraper import scrape_turkcell_deals
     from app.scrapers.turktelekom_scraper import scrape_turktelekom_deals
+    from app.scrapers.maximum_scraper import scrape_maximum_deals
+    from app.scrapers.bonus_scraper import scrape_bonus_deals
+    from app.scrapers.world_scraper import scrape_world_deals
+    from app.scrapers.axess_scraper import scrape_axess_deals
     from app.scrapers.lcwaikiki_scraper import scrape_lcwaikiki_deals
     from app.scrapers.koton_scraper import scrape_koton_deals
     from app.scrapers.mavi_scraper import scrape_mavi_deals
@@ -181,6 +189,7 @@ async def run_platform_scrape(platform: str, min_discount: int):
         HAKMAREXPRESS_CATEGORY_URLS, MACROCENTER_CATEGORY_URLS, BIZIMTOPTAN_CATEGORY_URLS,
         PEYNIRCIBABA_CATEGORY_URLS, BURGERKING_CATEGORY_URLS, MCDONALDS_CATEGORY_URLS,
         VODAFONE_CATEGORY_URLS, TURKCELL_CATEGORY_URLS, TURKTELEKOM_CATEGORY_URLS,
+        MAXIMUM_CATEGORY_URLS, BONUS_CATEGORY_URLS, WORLD_CATEGORY_URLS, AXESS_CATEGORY_URLS,
         LCWAIKIKI_CATEGORY_URLS, KOTON_CATEGORY_URLS, MAVI_CATEGORY_URLS,
         BOYNER_CATEGORY_URLS, PENTI_CATEGORY_URLS, WATSONS_CATEGORY_URLS, DR_CATEGORY_URLS,
         KARACA_CATEGORY_URLS, ENGLISHHOME_CATEGORY_URLS, IDEFIX_CATEGORY_URLS, TCHIBO_CATEGORY_URLS,
@@ -422,6 +431,39 @@ async def run_platform_scrape(platform: str, min_discount: int):
                 category="kampanya",
                 min_discount=0,
                 max_pages=2,
+            )
+        elif platform == "maximum":
+            await scrape_maximum_deals(
+                PLATFORM_FILES["maximum"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+                category_url=MAXIMUM_CATEGORY_URLS["kampanya"],
+            )
+        elif platform == "bonus":
+            await scrape_bonus_deals(
+                PLATFORM_FILES["bonus"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+                category_url=BONUS_CATEGORY_URLS["kampanya"],
+            )
+        elif platform == "world":
+            # World = YapıKredi hub: scraper bireysel + KOBİ alt sayfalarını
+            # kendi dolaşıyor; category_url geçmiyoruz.
+            await scrape_world_deals(
+                PLATFORM_FILES["world"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+            )
+        elif platform == "axess":
+            await scrape_axess_deals(
+                PLATFORM_FILES["axess"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+                category_url=AXESS_CATEGORY_URLS["kampanya"],
             )
         elif platform == "lcwaikiki":
             categories = list(LCWAIKIKI_CATEGORY_URLS.keys())
@@ -1053,6 +1095,7 @@ async def run_scrape_all_job(min_discount: int, platform: str = "all"):
             "a101","bim","sok","migros","carrefoursa","tarimkredi",
             "hakmarexpress","macrocenter","bizimtoptan","peynircibaba",
             "burgerking","mcdonalds","vodafone","turkcell","turktelekom",
+            "maximum","bonus","world","axess",
             "lcwaikiki","koton","mavi",
             "boyner","penti","watsons","dr",
             "karaca","englishhome","idefix","tchibo",

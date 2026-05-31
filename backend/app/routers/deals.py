@@ -296,7 +296,11 @@ def get_deals(platform: str = Query("amazon"), category: str = Query(None), min_
         return {"status": "error", "message": str(e)}
 
 
-CAMPAIGN_PLATFORMS = {"burgerking", "mcdonalds", "vodafone", "turkcell", "turktelekom"}
+CAMPAIGN_PLATFORMS = {
+    "burgerking", "mcdonalds",
+    "vodafone", "turkcell", "turktelekom",
+    "maximum", "bonus", "world", "axess",
+}
 
 # BOGO başlıklarını yakala — "1 alana 1 bedava", "ikincisi bedava",
 # "1+1 hediye", "2 al 1 öde" gibi varyasyonlar.

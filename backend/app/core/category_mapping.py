@@ -210,6 +210,24 @@ TURKTELEKOM_CATEGORY_URLS = {
     "kampanya": "https://www.turktelekom.com.tr/kampanyalar",
 }
 
+# Banka kampanyaları — chargeback / puan / sinema / market kampanyaları
+MAXIMUM_CATEGORY_URLS = {
+    "kampanya": "https://www.maximum.com.tr/kampanyalar",
+}
+
+BONUS_CATEGORY_URLS = {
+    "kampanya": "https://www.bonus.com.tr/kampanyalar",
+}
+
+# World = Yapı Kredi hub — bireysel + KOBİ alt sayfalarını scraper kendi dolaşır
+WORLD_CATEGORY_URLS = {
+    "kampanya": "https://www.yapikredi.com.tr/kampanyalar",
+}
+
+AXESS_CATEGORY_URLS = {
+    "kampanya": "https://www.axess.com.tr/kampanyalar",
+}
+
 GRATIS_CATEGORY_URLS = {
     # ── parfüm & deodorant (cinsiyet × tip) ──
     "kadin-parfum": "https://www.gratis.com/search?q=kadın+parfüm",

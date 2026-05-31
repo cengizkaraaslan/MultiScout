@@ -25,6 +25,10 @@ const PLATFORM_BADGE: Record<string, { label: string; color: string }> = {
   vodafone: { label: "Vodafone", color: "from-red-500 to-red-700" },
   turkcell: { label: "Turkcell", color: "from-yellow-500 to-amber-600" },
   turktelekom: { label: "Türk Telekom", color: "from-blue-600 to-indigo-700" },
+  maximum: { label: "Maximum", color: "from-blue-700 to-cyan-700" },
+  bonus: { label: "Bonus", color: "from-green-600 to-emerald-700" },
+  world: { label: "World", color: "from-violet-600 to-purple-700" },
+  axess: { label: "Axess", color: "from-rose-600 to-red-700" },
   a101: { label: "A101", color: "from-red-500 to-rose-600" },
   bim: { label: "BİM", color: "from-rose-500 to-pink-600" },
   sok: { label: "ŞOK", color: "from-amber-500 to-orange-600" },
@@ -61,12 +65,33 @@ const CATEGORY_LABEL: Record<string, string> = {
   "prime": "Prime",
   "ek-servis": "Ek Servis",
   "diger": "Diğer",
+  // Banka kampanyaları
+  "chargeback": "Chargeback / İade",
+  "puan": "Puan Kazanımı",
+  "maxipuan": "MaxiPuan",
+  "worldpuan": "WorldPuan",
+  "chip-para": "Chip-Para",
+  "bonus": "Bonus",
+  "sinema": "Sinema",
+  "restoran": "Restoran",
+  "market": "Market",
+  "seyahat": "Seyahat",
+  "taksit": "Taksit",
+  "akaryakit": "Akaryakıt",
+  "online": "Online Alışveriş",
+  "giyim": "Giyim",
+  "elektronik": "Elektronik",
+  "ev": "Ev",
+  "kobi": "KOBİ",
+  "spor": "Spor",
+  "iade": "İade",
 };
 
-type Filter = "all" | "bogo" | "restoran" | "operator" | "market";
+type Filter = "all" | "bogo" | "restoran" | "operator" | "banka" | "market";
 
 const RESTORAN_SET = new Set(["burgerking", "mcdonalds"]);
 const OPERATOR_SET = new Set(["vodafone", "turkcell", "turktelekom"]);
+const BANKA_SET = new Set(["maximum", "bonus", "world", "axess"]);
 const MARKET_SET = new Set([
   "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
   "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
@@ -107,6 +132,7 @@ export default function KampanyalarPage() {
     if (filter === "bogo") return items.filter((c) => c.campaign_kind === "bogo");
     if (filter === "restoran") return items.filter((c) => RESTORAN_SET.has(c.platform));
     if (filter === "operator") return items.filter((c) => OPERATOR_SET.has(c.platform));
+    if (filter === "banka") return items.filter((c) => BANKA_SET.has(c.platform));
     if (filter === "market") return items.filter((c) => MARKET_SET.has(c.platform));
     return items;
   }, [items, filter]);
@@ -116,6 +142,7 @@ export default function KampanyalarPage() {
     bogo: items.filter((c) => c.campaign_kind === "bogo").length,
     restoran: items.filter((c) => RESTORAN_SET.has(c.platform)).length,
     operator: items.filter((c) => OPERATOR_SET.has(c.platform)).length,
+    banka: items.filter((c) => BANKA_SET.has(c.platform)).length,
     market: items.filter((c) => MARKET_SET.has(c.platform)).length,
   }), [items]);
 
@@ -141,6 +168,7 @@ export default function KampanyalarPage() {
             { k: "bogo", label: "1 Alana 1 Bedava", icon: "🎁" },
             { k: "restoran", label: "Restoran", icon: "🍔" },
             { k: "operator", label: "Operatör", icon: "📱" },
+            { k: "banka", label: "Banka", icon: "💳" },
             { k: "market", label: "Market", icon: "🛍️" },
           ] as { k: Filter; label: string; icon: string }[]).map((f) => (
             <button

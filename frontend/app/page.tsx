@@ -49,6 +49,7 @@ type PlatformKey =
   | "a101" | "bim" | "sok" | "migros" | "carrefoursa" | "tarimkredi"
   | "hakmarexpress" | "macrocenter" | "bizimtoptan" | "peynircibaba" | "burgerking"
   | "mcdonalds" | "vodafone" | "turkcell" | "turktelekom"
+  | "maximum" | "bonus" | "world" | "axess"
   | "lcwaikiki" | "koton" | "mavi"
   | "boyner" | "penti" | "watsons" | "dr"
   | "karaca" | "englishhome" | "idefix" | "tchibo"
@@ -95,6 +96,10 @@ const PLATFORM_LABELS: Record<PlatformKey, string> = {
   vodafone: "Vodafone",
   turkcell: "Turkcell",
   turktelekom: "Türk Telekom",
+  maximum: "Maximum",
+  bonus: "Bonus",
+  world: "World",
+  axess: "Axess",
   lcwaikiki: "LC Waikiki",
   koton: "Koton",
   mavi: "Mavi",
@@ -147,6 +152,7 @@ const ALL_PLATFORM_KEYS: PlatformKey[] = [
   "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
   "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
   "burgerking", "mcdonalds", "vodafone", "turkcell", "turktelekom",
+  "maximum", "bonus", "world", "axess",
   "lcwaikiki", "koton", "mavi",
   "boyner", "penti", "watsons", "dr",
   "karaca", "englishhome", "idefix", "tchibo",
