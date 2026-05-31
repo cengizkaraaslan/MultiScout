@@ -153,6 +153,36 @@ BIZIMTOPTAN_CATEGORY_URLS = {
     "bebek-urunleri": "https://www.bizimtoptan.com.tr/bebek-urunleri",
 }
 
+# Peynirci Baba — kahvaltılık & şarküteri odaklı online market.
+# `/indirimli-urunler/` agregat indirim sayfası, kategori bazında da
+# `.price.old` ile indirim olan kalemleri yakalıyoruz.
+PEYNIRCIBABA_CATEGORY_URLS = {
+    "indirimli-urunler": "https://www.peynircibaba.com/indirimli-urunler/",
+    "beyaz-peynir": "https://www.peynircibaba.com/beyaz-peynir/",
+    "kasar-peyniri": "https://www.peynircibaba.com/kasar-peyniri/",
+    "ithal-peynirler": "https://www.peynircibaba.com/ithal-peynirler/",
+    "kahvaltilik-soslar": "https://www.peynircibaba.com/kahvaltilik-soslar/",
+    "et-urunleri": "https://www.peynircibaba.com/et-urunleri/",
+    "kavurma": "https://www.peynircibaba.com/kavurma/",
+    "fume-et": "https://www.peynircibaba.com/fume-et/",
+    "gunluk-sut": "https://www.peynircibaba.com/gunluk-sut/",
+    "ayran": "https://www.peynircibaba.com/ayran/",
+    "bal": "https://www.peynircibaba.com/bal/",
+    "helva": "https://www.peynircibaba.com/helva/",
+    "findik-fistik-ezmesi": "https://www.peynircibaba.com/findik-fistik-ezmesi/",
+    "atistirmalik": "https://www.peynircibaba.com/atistirmalik/",
+    "icecekler": "https://www.peynircibaba.com/icecekler/",
+    "cay": "https://www.peynircibaba.com/cay/",
+    "kahve": "https://www.peynircibaba.com/kahve/",
+    "baharat": "https://www.peynircibaba.com/baharat/",
+    "bakliyat": "https://www.peynircibaba.com/bakliyat/",
+    "eriste": "https://www.peynircibaba.com/eriste/",
+    "ekmek": "https://www.peynircibaba.com/ekmek/",
+    "hazir-tatlilar": "https://www.peynircibaba.com/hazir-tatlilar/",
+    "dilimli-zeytinler": "https://www.peynircibaba.com/dilimli-zeytinler/",
+    "gurme-urunler": "https://www.peynircibaba.com/gurme-urunler/",
+}
+
 GRATIS_CATEGORY_URLS = {
     # ── parfüm & deodorant (cinsiyet × tip) ──
     "kadin-parfum": "https://www.gratis.com/search?q=kadın+parfüm",

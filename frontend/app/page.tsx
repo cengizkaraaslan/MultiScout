@@ -47,7 +47,7 @@ type PlatformKey =
   | "hepsi" | "amazon" | "trendyol" | "hepsiburada" | "n11"
   | "pazarama" | "ciceksepeti" | "vatan" | "teknosa" | "decathlon" | "steam" | "mediamarkt" | "defacto" | "gratis"
   | "a101" | "bim" | "sok" | "migros" | "carrefoursa" | "tarimkredi"
-  | "hakmarexpress" | "macrocenter" | "bizimtoptan"
+  | "hakmarexpress" | "macrocenter" | "bizimtoptan" | "peynircibaba"
   | "lcwaikiki" | "koton" | "mavi"
   | "boyner" | "penti" | "watsons" | "dr"
   | "karaca" | "englishhome" | "idefix" | "tchibo"
@@ -88,6 +88,7 @@ const PLATFORM_LABELS: Record<PlatformKey, string> = {
   hakmarexpress: "Hakmar Express",
   macrocenter: "Macrocenter",
   bizimtoptan: "Bizim Toptan",
+  peynircibaba: "Peynirci Baba",
   lcwaikiki: "LC Waikiki",
   koton: "Koton",
   mavi: "Mavi",
@@ -138,7 +139,7 @@ const ALL_PLATFORM_KEYS: PlatformKey[] = [
   "hepsi", "amazon", "trendyol", "hepsiburada", "n11",
   "pazarama", "ciceksepeti", "vatan", "teknosa", "decathlon", "steam", "mediamarkt", "defacto", "gratis",
   "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
-  "hakmarexpress", "macrocenter", "bizimtoptan",
+  "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
   "lcwaikiki", "koton", "mavi",
   "boyner", "penti", "watsons", "dr",
   "karaca", "englishhome", "idefix", "tchibo",

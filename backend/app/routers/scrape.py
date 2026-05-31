@@ -28,6 +28,7 @@ SCRAPE_ALL_STATUS = {
     "hakmarexpress": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "macrocenter": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "bizimtoptan": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "peynircibaba": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "lcwaikiki": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "koton": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "mavi": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
@@ -116,6 +117,7 @@ async def run_platform_scrape(platform: str, min_discount: int):
     from app.scrapers.hakmarexpress_scraper import scrape_hakmarexpress_deals
     from app.scrapers.macrocenter_scraper import scrape_macrocenter_deals
     from app.scrapers.bizimtoptan_scraper import scrape_bizimtoptan_deals
+    from app.scrapers.peynircibaba_scraper import scrape_peynircibaba_deals
     from app.scrapers.lcwaikiki_scraper import scrape_lcwaikiki_deals
     from app.scrapers.koton_scraper import scrape_koton_deals
     from app.scrapers.mavi_scraper import scrape_mavi_deals
@@ -167,6 +169,7 @@ async def run_platform_scrape(platform: str, min_discount: int):
         DEFACTO_CATEGORY_URLS, MEDIAMARKT_CATEGORY_URLS, GRATIS_CATEGORY_URLS,
         MARKETFIYATI_CATEGORIES,
         HAKMAREXPRESS_CATEGORY_URLS, MACROCENTER_CATEGORY_URLS, BIZIMTOPTAN_CATEGORY_URLS,
+        PEYNIRCIBABA_CATEGORY_URLS,
         LCWAIKIKI_CATEGORY_URLS, KOTON_CATEGORY_URLS, MAVI_CATEGORY_URLS,
         BOYNER_CATEGORY_URLS, PENTI_CATEGORY_URLS, WATSONS_CATEGORY_URLS, DR_CATEGORY_URLS,
         KARACA_CATEGORY_URLS, ENGLISHHOME_CATEGORY_URLS, IDEFIX_CATEGORY_URLS, TCHIBO_CATEGORY_URLS,
@@ -341,6 +344,20 @@ async def run_platform_scrape(platform: str, min_discount: int):
                         category=cat,
                         min_discount=0,
                         category_url=BIZIMTOPTAN_CATEGORY_URLS[cat],
+                    )
+                    for cat in batch
+                ], return_exceptions=True)
+        elif platform == "peynircibaba":
+            # Peynirci Baba: gerçek %X indirim göstergesi var, normal min_discount uygulanır
+            categories = list(PEYNIRCIBABA_CATEGORY_URLS.keys())
+            for index in range(0, len(categories), CONCURRENT_SCRAPES):
+                batch = categories[index:index + CONCURRENT_SCRAPES]
+                await asyncio.gather(*[
+                    scrape_peynircibaba_deals(
+                        PLATFORM_FILES["peynircibaba"],
+                        category=cat,
+                        min_discount=min_discount,
+                        category_url=PEYNIRCIBABA_CATEGORY_URLS[cat],
                     )
                     for cat in batch
                 ], return_exceptions=True)
@@ -972,7 +989,7 @@ async def run_scrape_all_job(min_discount: int, platform: str = "all"):
             "amazon","trendyol","n11","hepsiburada","pazarama","ciceksepeti",
             "vatan","teknosa","decathlon","steam","defacto","mediamarkt","gratis",
             "a101","bim","sok","migros","carrefoursa","tarimkredi",
-            "hakmarexpress","macrocenter","bizimtoptan",
+            "hakmarexpress","macrocenter","bizimtoptan","peynircibaba",
             "lcwaikiki","koton","mavi",
             "boyner","penti","watsons","dr",
             "karaca","englishhome","idefix","tchibo",

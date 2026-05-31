@@ -31,9 +31,15 @@ _CATEGORY_GROUPS: dict[str, list[str]] = {
         "gida", "temel-gida", "sut-kahvalti", "sut-kahvaltilik",
         "sut-urunleri-kahvaltilik", "et-tavuk", "et-tavuk-balik",
         "et-urunleri-ve-sarkuteri", "et-et-urunleri", "sarkuteri-kahvaltilik",
-        "sebze-meyve", "meyve-sebze", "icecek", "atistirmalik",
+        "sebze-meyve", "meyve-sebze", "icecek", "icecekler", "atistirmalik",
         "sivi-yag-margarin", "dondurma", "kahve", "cekirdek-kahve",
         "filtre-kahve", "kapsul-kahve",
+        # Peynirci Baba — kahvaltılık / şarküteri / kuru gıda detay slug'ları
+        "indirimli-urunler", "beyaz-peynir", "kasar-peyniri", "ithal-peynirler",
+        "kahvaltilik-soslar", "et-urunleri", "kavurma", "fume-et",
+        "gunluk-sut", "ayran", "bal", "helva", "findik-fistik-ezmesi",
+        "cay", "baharat", "bakliyat", "eriste", "ekmek",
+        "hazir-tatlilar", "dilimli-zeytinler", "gurme-urunler",
     ],
     "Temizlik & Bakım": [
         "temizlik", "hijyen", "hijyen-bakim", "hijyen-bebek",

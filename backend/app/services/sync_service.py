@@ -27,6 +27,7 @@ PLATFORM_FILES = {
     "hakmarexpress": "data/deals_hakmarexpress.json",
     "macrocenter": "data/deals_macrocenter.json",
     "bizimtoptan": "data/deals_bizimtoptan.json",
+    "peynircibaba": "data/deals_peynircibaba.json",
     "lcwaikiki": "data/deals_lcwaikiki.json",
     "koton": "data/deals_koton.json",
     "mavi": "data/deals_mavi.json",
