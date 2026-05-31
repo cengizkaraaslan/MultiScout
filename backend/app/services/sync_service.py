@@ -114,11 +114,33 @@ def sync_json_to_db(platform: str, db: Session):
             print(f"[SYNC] {platform} JSON formatı geçersiz", flush=True)
             return
 
+        # Defansif: badge/placeholder title'ları DB'ye yazma (eski stale kayıtları temizler)
+        BADGE_TITLES = {"SQUARE", "ADD-ICON", "ADDICON", "KUPON", "COUPON", "BADGE", "LOGO"}
+
+        def _is_badge_record(d: dict) -> bool:
+            title = (d.get('title') or '').strip().upper()
+            image = d.get('image') or ''
+            if title in BADGE_TITLES:
+                return True
+            if len(title) < 6:
+                return True
+            # N11'e özel: /a1/org/ pathi badge/sponsor logosu
+            if platform == 'n11' and 'n11scdn.akamaized.net/a1/org/' in image:
+                return True
+            return False
+
         unique_deals: dict[str, dict] = {}
+        skipped_badge = 0
         for deal in deals:
             link = deal.get('link')
-            if link:
-                unique_deals[link] = deal
+            if not link:
+                continue
+            if _is_badge_record(deal):
+                skipped_badge += 1
+                continue
+            unique_deals[link] = deal
+        if skipped_badge:
+            print(f"[SYNC] {platform}: {skipped_badge} badge/placeholder kaydı atlandı", flush=True)
 
         synced_count = 0
         failed = 0

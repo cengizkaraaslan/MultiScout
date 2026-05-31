@@ -101,9 +101,9 @@ async def scrape_n11_deals(
                        return true;
                      })
                   || linkEl.querySelector('img');
-                let title = img?.getAttribute('alt') || linkEl.getAttribute('title') || linkEl.getAttribute('aria-label') || '';
-                // alt "SQUARE" ise başlık değildir
-                if (title && /^(SQUARE|add-icon)$/i.test(title)) title = '';
+                let title = (img?.getAttribute('alt') || linkEl.getAttribute('title') || linkEl.getAttribute('aria-label') || '').trim();
+                // alt "SQUARE"/"add-icon" + olası whitespace/casing varyasyonları: başlık değildir
+                if (title && /^(square|add[-_ ]?icon|kupon|coupon|badge|logo|tasarim)$/i.test(title)) title = '';
                 if (!title || title.length < 5) {
                   const titleEl = linkEl.querySelector('h3, h2, [class*="productName"], [class*="title"], [class*="name"]');
                   if (titleEl) title = titleEl.innerText.trim();
@@ -148,10 +148,16 @@ async def scrape_n11_deals(
                 discount = prod.get("discount", 0)
                 if discount < min_discount:
                     continue
-                # Defansif: title "SQUARE"/"add-icon" veya image /org/ ise = badge resmi → atla
+                # Defansif: title badge alt-text'i / image /org/ path'inde ise = atla
+                # Valid n11scdn ürün resmi: /a1/{boyut}/.../IMG-xxx.jpg
+                # Badge/sponsor logosu:   /a1/org/.../xxx.png
                 ptitle = (prod.get("title") or "").strip()
                 pimage = prod.get("image") or ""
-                if ptitle.upper() in ("SQUARE", "ADD-ICON") or "/org/" in pimage:
+                badge_titles = {"SQUARE", "ADD-ICON", "ADDICON", "KUPON", "COUPON", "BADGE", "LOGO"}
+                if ptitle.upper() in badge_titles or "n11scdn.akamaized.net/a1/org/" in pimage:
+                    continue
+                # Çok kısa veya tek-kelime title da şüpheli (en az 12 karakter ürün başlığı için)
+                if len(ptitle) < 12:
                     continue
                 deals.append({
                     "title": prod.get("title", ""),
