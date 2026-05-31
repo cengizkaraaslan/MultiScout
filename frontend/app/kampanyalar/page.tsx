@@ -21,6 +21,10 @@ interface Campaign {
 
 const PLATFORM_BADGE: Record<string, { label: string; color: string }> = {
   burgerking: { label: "Burger King", color: "from-yellow-500 to-orange-600" },
+  mcdonalds: { label: "McDonald's", color: "from-yellow-400 to-red-600" },
+  vodafone: { label: "Vodafone", color: "from-red-500 to-red-700" },
+  turkcell: { label: "Turkcell", color: "from-yellow-500 to-amber-600" },
+  turktelekom: { label: "Türk Telekom", color: "from-blue-600 to-indigo-700" },
   a101: { label: "A101", color: "from-red-500 to-rose-600" },
   bim: { label: "BİM", color: "from-rose-500 to-pink-600" },
   sok: { label: "ŞOK", color: "from-amber-500 to-orange-600" },
@@ -40,9 +44,33 @@ const CATEGORY_LABEL: Record<string, string> = {
   "cocuk-menusu": "Çocuk Menüsü",
   "kahvalti": "Kahvaltı",
   "kampanya": "Kampanya",
+  // Operatör kampanyaları
+  "ucretsiz-internet": "Ücretsiz İnternet",
+  "gb-hediye": "GB Hediye",
+  "ev-interneti": "Ev İnterneti",
+  "fiber": "Fiber",
+  "faturasiz": "Faturasız",
+  "faturali": "Faturalı",
+  "mobil-hat": "Mobil Hat",
+  "indirim": "İndirim",
+  "ucretsiz-hediye": "Ücretsiz Hediye",
+  "hediye": "Hediye",
+  "marka": "Marka Ayrıcalığı",
+  "red-ayricalik": "Red Ayrıcalığı",
+  "dijital-servis": "Dijital Servis",
+  "prime": "Prime",
+  "ek-servis": "Ek Servis",
+  "diger": "Diğer",
 };
 
-type Filter = "all" | "bogo" | "restoran" | "market";
+type Filter = "all" | "bogo" | "restoran" | "operator" | "market";
+
+const RESTORAN_SET = new Set(["burgerking", "mcdonalds"]);
+const OPERATOR_SET = new Set(["vodafone", "turkcell", "turktelekom"]);
+const MARKET_SET = new Set([
+  "a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi",
+  "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba",
+]);
 
 export default function KampanyalarPage() {
   const [items, setItems] = useState<Campaign[]>([]);
@@ -55,7 +83,7 @@ export default function KampanyalarPage() {
       setLoading(true);
       setErr(null);
       try {
-        const res = await fetch(`${API_URL}/api/campaigns?limit=120`);
+        const res = await fetch(`${API_URL}/api/campaigns?limit=400`);
         if (!res.ok) {
           setErr(`Sunucu hatası: HTTP ${res.status}`);
           return;
@@ -77,21 +105,18 @@ export default function KampanyalarPage() {
   const visible = useMemo(() => {
     if (filter === "all") return items;
     if (filter === "bogo") return items.filter((c) => c.campaign_kind === "bogo");
-    if (filter === "restoran") return items.filter((c) => c.platform === "burgerking");
-    if (filter === "market")
-      return items.filter((c) =>
-        ["a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi", "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba"].includes(c.platform),
-      );
+    if (filter === "restoran") return items.filter((c) => RESTORAN_SET.has(c.platform));
+    if (filter === "operator") return items.filter((c) => OPERATOR_SET.has(c.platform));
+    if (filter === "market") return items.filter((c) => MARKET_SET.has(c.platform));
     return items;
   }, [items, filter]);
 
   const counts = useMemo(() => ({
     all: items.length,
     bogo: items.filter((c) => c.campaign_kind === "bogo").length,
-    restoran: items.filter((c) => c.platform === "burgerking").length,
-    market: items.filter((c) =>
-      ["a101", "bim", "sok", "migros", "carrefoursa", "tarimkredi", "hakmarexpress", "macrocenter", "bizimtoptan", "peynircibaba"].includes(c.platform),
-    ).length,
+    restoran: items.filter((c) => RESTORAN_SET.has(c.platform)).length,
+    operator: items.filter((c) => OPERATOR_SET.has(c.platform)).length,
+    market: items.filter((c) => MARKET_SET.has(c.platform)).length,
   }), [items]);
 
   return (
@@ -115,6 +140,7 @@ export default function KampanyalarPage() {
             { k: "all", label: "Tümü", icon: "🎯" },
             { k: "bogo", label: "1 Alana 1 Bedava", icon: "🎁" },
             { k: "restoran", label: "Restoran", icon: "🍔" },
+            { k: "operator", label: "Operatör", icon: "📱" },
             { k: "market", label: "Market", icon: "🛍️" },
           ] as { k: Filter; label: string; icon: string }[]).map((f) => (
             <button

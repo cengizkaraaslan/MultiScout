@@ -30,6 +30,10 @@ SCRAPE_ALL_STATUS = {
     "bizimtoptan": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "peynircibaba": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "burgerking": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "mcdonalds": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "vodafone": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "turkcell": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
+    "turktelekom": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "lcwaikiki": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "koton": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
     "mavi": {"status": "idle", "message": "", "current_category": None, "updated_at": None},
@@ -120,6 +124,10 @@ async def run_platform_scrape(platform: str, min_discount: int):
     from app.scrapers.bizimtoptan_scraper import scrape_bizimtoptan_deals
     from app.scrapers.peynircibaba_scraper import scrape_peynircibaba_deals
     from app.scrapers.burgerking_scraper import scrape_burgerking_deals
+    from app.scrapers.mcdonalds_scraper import scrape_mcdonalds_deals
+    from app.scrapers.vodafone_scraper import scrape_vodafone_deals
+    from app.scrapers.turkcell_scraper import scrape_turkcell_deals
+    from app.scrapers.turktelekom_scraper import scrape_turktelekom_deals
     from app.scrapers.lcwaikiki_scraper import scrape_lcwaikiki_deals
     from app.scrapers.koton_scraper import scrape_koton_deals
     from app.scrapers.mavi_scraper import scrape_mavi_deals
@@ -171,7 +179,8 @@ async def run_platform_scrape(platform: str, min_discount: int):
         DEFACTO_CATEGORY_URLS, MEDIAMARKT_CATEGORY_URLS, GRATIS_CATEGORY_URLS,
         MARKETFIYATI_CATEGORIES,
         HAKMAREXPRESS_CATEGORY_URLS, MACROCENTER_CATEGORY_URLS, BIZIMTOPTAN_CATEGORY_URLS,
-        PEYNIRCIBABA_CATEGORY_URLS, BURGERKING_CATEGORY_URLS,
+        PEYNIRCIBABA_CATEGORY_URLS, BURGERKING_CATEGORY_URLS, MCDONALDS_CATEGORY_URLS,
+        VODAFONE_CATEGORY_URLS, TURKCELL_CATEGORY_URLS, TURKTELEKOM_CATEGORY_URLS,
         LCWAIKIKI_CATEGORY_URLS, KOTON_CATEGORY_URLS, MAVI_CATEGORY_URLS,
         BOYNER_CATEGORY_URLS, PENTI_CATEGORY_URLS, WATSONS_CATEGORY_URLS, DR_CATEGORY_URLS,
         KARACA_CATEGORY_URLS, ENGLISHHOME_CATEGORY_URLS, IDEFIX_CATEGORY_URLS, TCHIBO_CATEGORY_URLS,
@@ -375,6 +384,45 @@ async def run_platform_scrape(platform: str, min_discount: int):
                 )
                 for cat in categories
             ], return_exceptions=True)
+        elif platform == "mcdonalds":
+            categories = list(MCDONALDS_CATEGORY_URLS.keys())
+            await asyncio.gather(*[
+                scrape_mcdonalds_deals(
+                    PLATFORM_FILES["mcdonalds"],
+                    category=cat,
+                    min_discount=0,
+                    category_url=MCDONALDS_CATEGORY_URLS[cat],
+                )
+                for cat in categories
+            ], return_exceptions=True)
+        elif platform == "vodafone":
+            # Vodafone: scraper kendi LIST + SUB_PAGES zincirler
+            # (category_url verilmezse default LIST'i kullanır).
+            await scrape_vodafone_deals(
+                PLATFORM_FILES["vodafone"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+            )
+        elif platform == "turkcell":
+            # Turkcell: ana /kampanyalar sayfası sadece kategori linkleri içeriyor;
+            # gerçek kartlar SUB_PAGES'te. category_url geçmiyoruz ki scraper
+            # kendi SUB_PAGES'i iterate etsin.
+            await scrape_turkcell_deals(
+                PLATFORM_FILES["turkcell"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=5,
+            )
+        elif platform == "turktelekom":
+            # Türk Telekom: scraper category_url verilmeyince max_pages>=2 ile
+            # hem mobil hem evde-internet sayfasını çekiyor.
+            await scrape_turktelekom_deals(
+                PLATFORM_FILES["turktelekom"],
+                category="kampanya",
+                min_discount=0,
+                max_pages=2,
+            )
         elif platform == "lcwaikiki":
             categories = list(LCWAIKIKI_CATEGORY_URLS.keys())
             for index in range(0, len(categories), CONCURRENT_SCRAPES):
@@ -1004,7 +1052,7 @@ async def run_scrape_all_job(min_discount: int, platform: str = "all"):
             "vatan","teknosa","decathlon","steam","defacto","mediamarkt","gratis",
             "a101","bim","sok","migros","carrefoursa","tarimkredi",
             "hakmarexpress","macrocenter","bizimtoptan","peynircibaba",
-            "burgerking",
+            "burgerking","mcdonalds","vodafone","turkcell","turktelekom",
             "lcwaikiki","koton","mavi",
             "boyner","penti","watsons","dr",
             "karaca","englishhome","idefix","tchibo",

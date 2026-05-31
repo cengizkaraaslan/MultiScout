@@ -190,6 +190,26 @@ BURGERKING_CATEGORY_URLS = {
     "kampanya": "https://www.burgerking.com.tr/kampanyalar",
 }
 
+MCDONALDS_CATEGORY_URLS = {
+    "kampanya": "https://www.mcdonalds.com.tr/kampanyalar",
+}
+
+# Vodafone — ana /kampanyalar + faturasiz alt sayfa, scraper içinde
+# alt sayfaları zincirleyerek dolaşır (max_pages parametresi)
+VODAFONE_CATEGORY_URLS = {
+    "kampanya": "https://www.vodafone.com.tr/kampanyalar",
+}
+
+# Turkcell — Next.js SSR, scraper SUB_PAGES'i kendi dolaşır
+TURKCELL_CATEGORY_URLS = {
+    "kampanya": "https://www.turkcell.com.tr/kampanyalar",
+}
+
+# Türk Telekom — bireysel subdomaine 301 redirect var, scraper handle eder
+TURKTELEKOM_CATEGORY_URLS = {
+    "kampanya": "https://www.turktelekom.com.tr/kampanyalar",
+}
+
 GRATIS_CATEGORY_URLS = {
     # ── parfüm & deodorant (cinsiyet × tip) ──
     "kadin-parfum": "https://www.gratis.com/search?q=kadın+parfüm",

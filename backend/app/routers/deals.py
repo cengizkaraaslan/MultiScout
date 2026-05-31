@@ -296,7 +296,7 @@ def get_deals(platform: str = Query("amazon"), category: str = Query(None), min_
         return {"status": "error", "message": str(e)}
 
 
-CAMPAIGN_PLATFORMS = {"burgerking"}
+CAMPAIGN_PLATFORMS = {"burgerking", "mcdonalds", "vodafone", "turkcell", "turktelekom"}
 
 # BOGO başlıklarını yakala — "1 alana 1 bedava", "ikincisi bedava",
 # "1+1 hediye", "2 al 1 öde" gibi varyasyonlar.
@@ -315,7 +315,7 @@ _BOGO_RE = _re.compile(
 @router.get("/campaigns")
 def get_campaigns(
     bogo_only: bool = Query(False),
-    limit: int = Query(60),
+    limit: int = Query(300),
     db: Session = Depends(get_db),
 ):
     """Kampanyalar sayfası kaynağı. İki kaynaktan beslenir:
