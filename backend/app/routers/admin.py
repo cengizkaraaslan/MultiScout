@@ -153,13 +153,48 @@ def admin_scheduler_restart(x_admin_password: str | None = Header(default=None, 
 def admin_logs(
     lines: int = 200,
     platform: str | None = None,
+    level: str | None = None,
+    search: str | None = None,
+    source: str = "memory",
+    file: str = "backend.log",
     x_admin_password: str | None = Header(default=None, alias="X-ADMIN-PASSWORD"),
 ):
-    """Backend container stdout/stderr son N satır. Docker logs üzerinden değil,
-    backend kendi log akışını basit bir in-memory ring buffer'da tutuyor."""
+    """Backend log akışı.
+
+    source=memory (default): in-memory ring buffer (son 2000 satır, restart'ta uçar).
+      - level: ERROR / WARN / INFO (ERROR sadece error, WARN error+warn, INFO hepsi)
+      - search: substring filter
+      - platform: [Vodafone] gibi tag filter
+
+    source=disk: data/logs/<file> dosyasının son N satırı (restart-persistent).
+      - file: backend.log / errors.log / scrape.log
+    """
     _require_admin(x_admin_password)
+    n = min(max(lines, 10), 2000)
+    if source == "disk":
+        from app.core.logging_config import tail_log_file, list_log_files
+        raw = tail_log_file(file, n=n)
+        rows = [{"msg": ln, "src": "disk"} for ln in raw]
+        if level and level.upper() in ("ERROR", "WARN"):
+            needle = "[ERROR]" if level.upper() == "ERROR" else None
+            if needle:
+                rows = [r for r in rows if needle in r["msg"]]
+            else:
+                rows = [r for r in rows if "[ERROR]" in r["msg"] or "[WARN" in r["msg"]]
+        if search:
+            sq = search.lower()
+            rows = [r for r in rows if sq in r["msg"].lower()]
+        return {
+            "status": "success",
+            "data": {"lines": rows, "count": len(rows), "files": list_log_files()},
+        }
     from app.services.log_buffer import get_log_lines
-    rows = get_log_lines(limit=min(max(lines, 10), 2000), platform_filter=platform)
+    rows = get_log_lines(
+        limit=n,
+        platform_filter=platform,
+        level_filter=level,
+        search=search,
+    )
     return {"status": "success", "data": {"lines": rows, "count": len(rows)}}
 
 

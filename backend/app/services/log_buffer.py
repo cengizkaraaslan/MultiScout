@@ -34,11 +34,19 @@ def _push(line: str, source: str) -> None:
     line = line.rstrip()
     if not line:
         return
+    # Disk'e de yaz (logging_config.install_disk_logging() çağrıldıysa)
+    try:
+        from app.core.logging_config import write_print_line, detect_level
+        write_print_line(line, source)
+        level = detect_level(line)
+    except Exception:
+        level = "INFO"
     with _LOCK:
         _BUF.append({
             "ts": datetime.utcnow().isoformat() + "Z",
             "platform": _platform_from_line(line),
             "src": source,
+            "level": level,
             "msg": line[:1000],
         })
 
@@ -87,13 +95,30 @@ def install_log_capture() -> None:
     _INSTALLED = True
 
 
-def get_log_lines(limit: int = 200, platform_filter: str | None = None) -> list[dict]:
-    """Son N satırı döner (en eski → en yeni)."""
+def get_log_lines(
+    limit: int = 200,
+    platform_filter: str | None = None,
+    level_filter: str | None = None,
+    search: str | None = None,
+) -> list[dict]:
+    """Son N satırı döner (en eski → en yeni).
+
+    level_filter: "ERROR" / "WARN" / "INFO" (sadece bu seviye ve üstü)
+    search: substring (case-insensitive)
+    """
     pf = platform_filter.lower().strip() if platform_filter else None
+    lf = level_filter.upper().strip() if level_filter else None
+    sq = search.lower().strip() if search else None
     with _LOCK:
         rows: Iterable[dict] = list(_BUF)
     if pf:
         rows = [r for r in rows if r.get("platform") == pf]
+    if lf == "ERROR":
+        rows = [r for r in rows if r.get("level") == "ERROR"]
+    elif lf == "WARN":
+        rows = [r for r in rows if r.get("level") in ("ERROR", "WARN")]
+    if sq:
+        rows = [r for r in rows if sq in r.get("msg", "").lower()]
     rows = list(rows)
     if len(rows) > limit:
         rows = rows[-limit:]

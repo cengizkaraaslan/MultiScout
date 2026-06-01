@@ -1608,8 +1608,13 @@ function GlobalStatusBar({ onNavigate }: { onNavigate?: (tab: string) => void })
 
 /** Backend stdout/stderr ring buffer'ından log akışı */
 function LogsTab() {
-  const [logs, setLogs] = useState<Array<{ ts: string; platform: string | null; src: string; msg: string }>>([]);
+  const [logs, setLogs] = useState<Array<{ ts?: string; platform?: string | null; src: string; level?: string; msg: string }>>([]);
   const [filter, setFilter] = useState("");
+  const [level, setLevel] = useState<"" | "ERROR" | "WARN">("");
+  const [search, setSearch] = useState("");
+  const [source, setSource] = useState<"memory" | "disk">("memory");
+  const [file, setFile] = useState("backend.log");
+  const [files, setFiles] = useState<Array<{ name: string; size: number }>>([]);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
   const [paused, setPaused] = useState(false);
@@ -1624,17 +1629,22 @@ function LogsTab() {
         const pw = typeof window !== "undefined" ? localStorage.getItem("multiscout_admin_pw") : null;
         if (!pw) return;
         const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-        const url = `${API}/api/admin/logs?lines=300${filter ? `&platform=${encodeURIComponent(filter)}` : ""}`;
-        const res = await fetch(url, { headers: { "X-ADMIN-PASSWORD": pw } });
+        const params = new URLSearchParams({ lines: "300", source });
+        if (source === "disk") params.set("file", file);
+        if (filter) params.set("platform", filter);
+        if (level) params.set("level", level);
+        if (search) params.set("search", search);
+        const res = await fetch(`${API}/api/admin/logs?${params}`, { headers: { "X-ADMIN-PASSWORD": pw } });
         if (!res.ok || stopped) return;
         const json = await res.json();
         setLogs(json.data?.lines || []);
+        if (json.data?.files) setFiles(json.data.files);
       } catch {}
     };
     fetchLogs();
     const interval = setInterval(fetchLogs, 2500);
     return () => { stopped = true; clearInterval(interval); };
-  }, [autoRefresh, filter, paused]);
+  }, [autoRefresh, filter, paused, level, search, source, file]);
 
   useEffect(() => {
     if (autoScroll && scrollRef.current) {
@@ -1650,7 +1660,9 @@ function LogsTab() {
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
           <h2 className="text-lg font-bold">Loglar</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Backend stdout/stderr son 300 satır. 2.5 sn'de bir otomatik yenilenir.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Bellek (canlı, restart'ta uçar) veya disk (kalıcı, rotating 10MB × 5). Level + içerik arama destekli.
+          </p>
         </div>
         <div className="flex gap-2 items-center flex-wrap">
           <label className="flex items-center gap-1.5 text-xs">
@@ -1668,6 +1680,67 @@ function LogsTab() {
             {paused ? "▶ Devam" : "⏸ Duraklat"}
           </button>
         </div>
+      </div>
+
+      {/* Source / level / search row */}
+      <div className="flex flex-wrap gap-2 items-center text-xs">
+        <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded p-1">
+          <button
+            onClick={() => setSource("memory")}
+            className={`px-2.5 py-1 rounded text-xs ${source === "memory" ? "bg-blue-500 text-white" : "text-gray-600 dark:text-gray-400"}`}
+          >
+            ⚡ Bellek (canlı)
+          </button>
+          <button
+            onClick={() => setSource("disk")}
+            className={`px-2.5 py-1 rounded text-xs ${source === "disk" ? "bg-blue-500 text-white" : "text-gray-600 dark:text-gray-400"}`}
+          >
+            💾 Disk (kalıcı)
+          </button>
+        </div>
+        {source === "disk" && files.length > 0 && (
+          <select
+            value={file}
+            onChange={(e) => setFile(e.target.value)}
+            className="px-2 py-1 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
+          >
+            {files.filter(f => !f.name.match(/\.\d+$/)).map(f => (
+              <option key={f.name} value={f.name}>
+                {f.name} ({(f.size / 1024).toFixed(1)} KB)
+              </option>
+            ))}
+          </select>
+        )}
+        <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded p-1">
+          <button
+            onClick={() => setLevel("")}
+            className={`px-2.5 py-1 rounded ${level === "" ? "bg-gray-700 text-white" : "text-gray-600 dark:text-gray-400"}`}
+          >
+            Tümü
+          </button>
+          <button
+            onClick={() => setLevel("WARN")}
+            className={`px-2.5 py-1 rounded ${level === "WARN" ? "bg-amber-500 text-white" : "text-gray-600 dark:text-gray-400"}`}
+          >
+            ⚠ Uyarı+
+          </button>
+          <button
+            onClick={() => setLevel("ERROR")}
+            className={`px-2.5 py-1 rounded ${level === "ERROR" ? "bg-rose-500 text-white" : "text-gray-600 dark:text-gray-400"}`}
+          >
+            🔴 Hata
+          </button>
+        </div>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="🔎 İçerikte ara..."
+          className="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 min-w-[200px]"
+        />
+        {search && (
+          <button onClick={() => setSearch("")} className="text-gray-500 hover:text-gray-700">✕</button>
+        )}
       </div>
 
       {/* Platform filter chips */}
@@ -1714,10 +1787,17 @@ function LogsTab() {
         )}
         {filtered.map((l, i) => {
           const ts = l.ts ? new Date(l.ts).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "";
-          const isErr = l.src === "err" || /HATA|Error|error|Traceback|hata/.test(l.msg);
+          const isErr = l.level === "ERROR" || l.src === "err" || /HATA|Error|error|Traceback|hata/.test(l.msg);
+          const isWarn = l.level === "WARN" || /WARN|Uyari|Uyarı|skipped|atlandı/.test(l.msg);
+          const cls = isErr ? "text-rose-300" : isWarn ? "text-amber-300" : "";
           return (
-            <div key={i} className={`flex gap-2 ${isErr ? "text-rose-300" : ""}`}>
+            <div key={i} className={`flex gap-2 ${cls}`}>
               <span className="text-gray-500 shrink-0">{ts}</span>
+              {l.level && (
+                <span className={`shrink-0 ${isErr ? "text-rose-400" : isWarn ? "text-amber-400" : "text-gray-600"}`}>
+                  {l.level === "ERROR" ? "🔴" : l.level === "WARN" ? "⚠" : "·"}
+                </span>
+              )}
               {l.platform && (
                 <span className="text-cyan-400 shrink-0">[{l.platform}]</span>
               )}
