@@ -1,5 +1,20 @@
-version: '3.8'
 services:
+  db:
+    container_name: multiscout-db
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: multiscout
+      POSTGRES_PASSWORD: multiscout
+      POSTGRES_DB: multiscout
+    volumes:
+      - multiscout_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U multiscout -d multiscout"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   backend:
     container_name: multiscout-backend
     build:
@@ -8,18 +23,28 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-    env_file:
-      - ./backend/.env
+      - ./backend/data:/app/data
+    environment:
+      - DATABASE_URL=postgresql://multiscout:multiscout@db:5432/multiscout
+      - CORS_ORIGINS=http://localhost:3000
+      - SCHEDULER_ENABLED=true
+      - AMAZON_SCRAPE_INTERVAL_MIN=60
+      - OTHER_SCRAPE_INTERVAL_MIN=45
+      - API_KEY=
+    depends_on:
+      db:
+        condition: service_healthy
+
   frontend:
     container_name: multiscout-frontend
     build:
       context: ./frontend
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
 
-volumes: {}
+volumes:
+  multiscout_pg: {}

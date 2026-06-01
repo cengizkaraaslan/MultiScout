@@ -1,4 +1,5 @@
 import json
+import os
 import asyncio
 import random
 import re
@@ -212,6 +213,10 @@ async def scrape_amazon_deals(output_file: str, history_file: str = "deals_histo
             await browser.close()
 
     async with FILE_WRITE_LOCK:
+        for p_ in (output_file, history_file):
+            d_ = os.path.dirname(p_)
+            if d_:
+                os.makedirs(d_, exist_ok=True)
         history = load_deals_history(history_file)
         existing_deals = []
         if Path(output_file).exists():

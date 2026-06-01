@@ -1,30 +1,72 @@
-# MultiScout: Akıllı Fırsat Takipçisi
+# MultiScout — Akıllı Fırsat Takipçisi
 
-MultiScout, popüler e-ticaret platformlarındaki (Amazon, Trendyol, N11) fırsatları takip eden, gelişmiş bir fiyat takip ve indirim analiz sistemidir.
+Amazon.tr, Trendyol ve N11 üzerindeki indirimli ürünleri tarayan, fiyat geçmişini saklayan FastAPI + Next.js uygulaması.
 
-## 🚀 Canlı Demo
-- **Frontend:** https://multi-scouts-6mvzgir42-gokhansprojects.vercel.app
-- **Backend API:** https://multiscout.onrender.com
+## Canlı Demo
+- Frontend: https://multi-scouts-6mvzgir42-gokhansprojects.vercel.app
+- Backend API: https://multiscout.onrender.com
 
-## Özellikler
-- **Çoklu Platform Desteği:** Amazon, Trendyol ve N11 üzerinde eş zamanlı tarama.
-- **Akıllı İndirim Hesaplama:** Ürünlerin fiyat geçmişini takip ederek gerçek indirim oranlarını hesaplar.
-- **Duplicate Temizliği:** Aynı ürünlerin farklı taramalardan gelen tekrarlarını veritabanı ve JSON seviyesinde otomatik temizler.
-- **Fiyat Geçmişi:** Ürünlerin zaman içerisindeki fiyat değişimlerini JSON formatında saklar.
-- **Hızlı Arayüz:** Modern React (Next.js) arayüzü ile fırsatları ucuzdan pahalıya veya indirime göre sıralama.
-- **Sıralama Özellikleri:** Fiyat, İndirim Oranı ve Tarih'e göre sıralama.
+## Hızlı Kurulum (Lokal Docker)
 
-## Teknoloji Yığını
-- **Backend:** FastAPI, SQLAlchemy (PostgreSQL), Playwright (Web Scraping).
-- **Frontend:** Next.js, Tailwind CSS.
-- **Altyapı:** Docker Compose, Render (Backend), Vercel (Frontend).
+```bash
+cp backend/.env.example backend/.env
+# .env içine DATABASE_URL (Neon/Postgres) gir; API_KEY istersen üret
+docker-compose up --build
+```
 
-## Kurulum (Lokal)
-1. `.env` dosyasını oluşturun ve `DATABASE_URL` değerini girin.
-2. `docker-compose up --build` komutuyla sistemi ayağa kaldırın.
-3. `/api/scrape-all` endpoint'i ile tüm platformları taratın.
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- API docs: http://localhost:8000/docs
 
-## Deployment
-- **Backend:** Render.com (Docker konteyner)
-- **Frontend:** Vercel (Next.js)
-- **Veritabanı:** Neon.tech (PostgreSQL)
+## Ortam Değişkenleri (backend)
+
+| Değişken | Varsayılan | Açıklama |
+|---|---|---|
+| `DATABASE_URL` | (zorunlu) | PostgreSQL connection string |
+| `API_KEY` | (boş) | Boşsa korumalı endpoint'ler açık; doluysa `X-API-KEY` header zorunlu |
+| `CORS_ORIGINS` | `http://localhost:3000` | Virgülle ayrılmış |
+| `SCHEDULER_ENABLED` | `true` | `false` = otomatik tarama kapalı |
+| `AMAZON_SCRAPE_INTERVAL_MIN` | `60` | Amazon scheduler aralığı (dk) |
+| `OTHER_SCRAPE_INTERVAL_MIN` | `45` | Trendyol/N11 scheduler aralığı |
+| `CLEANUP_INTERVAL_HOUR` | `3` | DB duplicate temizlik aralığı |
+| `DATA_DIR` | `data` | JSON dosyaları için klasör |
+
+## API
+
+- `GET /api/categories` — düz kategori listesi
+- `GET /api/category-tree` — sidebar için iç içe ağaç
+- `GET /api/deals?platform=amazon&category=gida&sort_by=last_updated`
+- `GET /api/scrape-all-status` — top-level `status` + per-platform durum
+- `GET /api/compare-prices?product_id=amazon_XXXXX`
+- `POST /api/scrape-all?platform=all` — `X-API-KEY` gerekli (API_KEY varsa)
+- `POST /api/deals-reset-db` — korumalı
+- `POST /api/deals-cleanup-json` — korumalı
+- `POST /api/deals-cleanup-duplicates` — korumalı
+
+## Mimari
+
+```
+backend/
+  app/
+    core/auth.py          # X-API-KEY dependency
+    core/category_mapping.py
+    models/database.py    # SQLAlchemy + deal_score
+    routers/              # deals, scrape, compare
+    scrapers/             # amazon, trendyol, n11
+    scrapers/io.py        # paylaşılan JSON IO + asyncio lock
+    services/             # sync, scheduler
+frontend/app/page.tsx     # ana arayüz
+frontend/components/Sidebar.tsx
+```
+
+## Bilinen Sınırlamalar
+
+- **Hepsiburada** devre dışı (bot koruması).
+- Render ücretsiz: 512MB RAM Playwright için sınırda, cold start ~15dk inaktivitenin sonunda.
+- JSON dosyaları geçici (Render restart'ta silinir); kalıcı veri PostgreSQL'de.
+
+## Üretim Deploy
+
+- Backend: Render Web Service (Docker) — `API_KEY` ve `CORS_ORIGINS` set et.
+- Frontend: Vercel veya Render — `NEXT_PUBLIC_API_URL` build-time tanımlı olmalı.
+- DB: Neon.tech (ücretsiz Postgres).

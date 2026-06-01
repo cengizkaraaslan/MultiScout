@@ -1,1 +1,442 @@
-[]
+[
+  {
+    "title": "Makarna Lütfen Karışık Sebzeli Tam Buğday Makarna (200 gram)",
+    "price": "168,67 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-karisik-sebzeli-tam-bugday-makarna-200-gram-p-HBCV00000YYVCJ",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001059687930.jpg",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711869"
+  },
+  {
+    "title": "Makarna Lütfen Brokoli ve Ispanaklı Makarna (200 gram)",
+    "price": "168,67 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-brokoli-ve-ispanakli-makarna-200-gram-p-HBCV00000SODHT",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000997445772.jpg",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711881"
+  },
+  {
+    "title": "Makarna Lütfen Karışık Sebzeli Makarna (%35 Sebze-200 gram)",
+    "price": "168,67 TL",
+    "discount_percentage": 35,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-karisik-sebzeli-makarna-35-sebze-200-gram-p-HBCV000032O1K6",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001059608678.jpg",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711883"
+  },
+  {
+    "title": "Makarna Lütfen Organik Makarna (200 gram)",
+    "price": "168,67 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-organik-makarna-200-gram-p-HBV00000NAURA",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711884"
+  },
+  {
+    "title": "Makarna Lütfen Karışık Sebzeli Harf Rakam Şehriye (%35 Sebzeli-250 g)",
+    "price": "168,67 TL",
+    "discount_percentage": 35,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-karisik-sebzeli-harf-rakam-sehriye-35-sebzeli-250-g-p-HBV00000NAUPU",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001094304559.jpg",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711885"
+  },
+  {
+    "title": "Makarna Lütfen Karışık Sebzeli Kuskus (%35 Sebze-250 gram)",
+    "price": "168,67 TL",
+    "discount_percentage": 35,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-karisik-sebzeli-kuskus-35-sebze-250-gram-p-HBCV00000SO98H",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000999629923.jpg",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711886"
+  },
+  {
+    "title": "Makarna Lütfen Kendinden Kıymalı Kuskus (250 gr)",
+    "price": "242,17 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/makarna-lutfen-kendinden-kiymali-kuskus-250-gr-p-HBCV00008TL3QH",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "gida",
+    "last_updated": "2026-05-25T19:57:36.711887"
+  },
+  {
+    "title": "ChildGen Childgen Süper Yıkanabilir 6'lı Parmak Boya Seti (6X50GR)",
+    "price": "299,90 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/childgen-super-yikanabilir-6-li-parmak-boya-seti-6x50gr-p-HBCV000050DZYN",
+    "image": "https://productimages.hepsiburada.net/s/471/90-90/110000512730779.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605243"
+  },
+  {
+    "title": "ChildGen Doğal Kinetik Oyun Kumu 1kg",
+    "price": "334,94 TL",
+    "discount_percentage": 54,
+    "link": "https://www.hepsiburada.com/childgen-dogal-kinetik-oyun-kumu-1kg-p-HBCV00000QOMUB",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000949910656.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605252"
+  },
+  {
+    "title": "ChildGen Doğal Oyun Hamuru - 9’lu 9X125 gr Vakumlu Kartuş Paket - (Ecopack-Refill)",
+    "price": "319,94 TL",
+    "discount_percentage": 54,
+    "link": "https://www.hepsiburada.com/childgen-dogal-oyun-hamuru-9-lu-9x125-gr-vakumlu-kartus-paket-ecopack-refill-p-HBCV00002CU994",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001618232605.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605253"
+  },
+  {
+    "title": "ChildGen Childgen Doğal Oyun Hamuru - 6lı 6X125 gr Vakumlu Kartuş Paket - (Ecopack-Refill)",
+    "price": "290,94 TL",
+    "discount_percentage": 40,
+    "link": "https://www.hepsiburada.com/childgen-dogal-oyun-hamuru-6li-6x125-gr-vakumlu-kartus-paket-ecopack-refill-p-HBCV00002D4D5L",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605254"
+  },
+  {
+    "title": "ChildGen Doğal Oyun Hamuru - Eco Cup- 6x125gr Ana Ve Ara Renkler",
+    "price": "249,90 TL",
+    "discount_percentage": 29,
+    "link": "https://www.hepsiburada.com/childgen-dogal-oyun-hamuru-eco-cup-6x125gr-ana-ve-ara-renkler-p-HBCV00006HJHBG",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605256"
+  },
+  {
+    "title": "Globber Explorer 4in1 Trike Bisiklet - Zeytin Yeşili",
+    "price": "12.298,65 TL",
+    "discount_percentage": 15,
+    "link": "https://www.hepsiburada.com/globber-explorer-4in1-trike-bisiklet-zeytin-yesili-p-HBCV00007OVT85",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000868711136.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605257"
+  },
+  {
+    "title": "Globber Explorer 4in1 Katlanabilir Bisiklet - Koyu Bej",
+    "price": "16.998,30 TL",
+    "discount_percentage": 10,
+    "link": "https://www.hepsiburada.com/globber-explorer-4in1-katlanabilir-bisiklet-koyu-bej-p-HBCV00004U8SBV",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000775567067.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605258"
+  },
+  {
+    "title": "Globber Primo Katlanabilir Işıklı 3 Tekerlekli Scooter -Kırmızı",
+    "price": "4.499,40 TL",
+    "discount_percentage": 40,
+    "link": "https://www.hepsiburada.com/globber-primo-katlanabilir-isikli-3-tekerlekli-scooter-kirmizi-p-HBCV00005YDS2A",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000633983674.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605259"
+  },
+  {
+    "title": "Globber Go Up Active Işıklı Scooter - Koyu Mint",
+    "price": "7.499,90 TL",
+    "discount_percentage": 30,
+    "link": "https://www.hepsiburada.com/globber-go-up-active-isikli-scooter-koyu-mint-p-HBCV0000AJ6UBC",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605260"
+  },
+  {
+    "title": "Globber Go Up Active Işıklı Scooter 3 Tekerlekli Yeşil 1+ Yaş İçin Katlanabilir Eğlence",
+    "price": "7.499,90 TL",
+    "discount_percentage": 30,
+    "link": "https://www.hepsiburada.com/globber-go-up-active-isikli-scooter-3-tekerlekli-yesil-1-yas-icin-katlanabilir-eglence-p-HBCV0000AJ6SZU",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605261"
+  },
+  {
+    "title": "Learning Fun 224 Adet Flash Kart Şarjlı Sesli Eğitici Okul Öncesi Eğitim Dil Oyuncağı Ingilizce - Mavi",
+    "price": "379,40 TL",
+    "discount_percentage": 53,
+    "link": "https://www.hepsiburada.com/learning-fun-224-adet-flash-kart-sarjli-sesli-egitici-okul-oncesi-egitim-dil-oyuncagi-ingilizce-mavi-p-HBCV000058HWK1",
+    "image": "https://productimages.hepsiburada.net/s/494/222-222/110000544859301.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605262"
+  },
+  {
+    "title": "Flex Track Yarış Pisti Vantuzlu 4.5 Metre 1:64 Ölçek Tüm Arabalara Uyumlu Mavi",
+    "price": "273,41 TL",
+    "discount_percentage": 27,
+    "link": "https://www.hepsiburada.com/flex-track-yaris-pisti-vantuzlu-4-5-metre-1-64-olcek-tum-arabalara-uyumlu-mavi-p-HBCV0000AR8OYM",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001279550309.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605263"
+  },
+  {
+    "title": "Circle Toys Geometrik Yumurta Eşleme Oyunu",
+    "price": "299,90 TL",
+    "discount_percentage": 55,
+    "link": "https://www.hepsiburada.com/circle-toys-geometrik-yumurta-esleme-oyunu-p-HBV00000TDVI1",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110000887116084.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605264"
+  },
+  {
+    "title": "Circle Toys UFO Eğitici Duyusal Aktivite Oyuncağı - 1-3 Yaş Yürümeye Başlayan Çocuklar için Montessori Gelişim Seti",
+    "price": "599,90 TL",
+    "discount_percentage": 55,
+    "link": "https://www.hepsiburada.com/ufo-egitici-duyusal-aktivite-oyuncagi-1-3-yas-yurumeye-baslayan-cocuklar-icin-montessori-gelisim-seti-p-HBCV00009PLAFZ",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001153814937.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605265"
+  },
+  {
+    "title": "Circle Toys Eğitici Ahşap Ksilofon – 8 Tonlu Renkli Müzik Oyuncağı",
+    "price": "199,80 TL",
+    "discount_percentage": 55,
+    "link": "https://www.hepsiburada.com/egitici-ahsap-ksilofon-8-tonlu-renkli-muzik-oyuncagi-p-HBCV00009PKSAN",
+    "image": "https://productimages.hepsiburada.net/s/777/90-90/110001153755246.jpg",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605266"
+  },
+  {
+    "title": "Circle Toys Dört Mevsim Puzzle +24 ay, 4 farklı puzzle",
+    "price": "293,79 TL",
+    "discount_percentage": 55,
+    "link": "https://www.hepsiburada.com/circle-toys-dort-mevsim-puzzle-24-ay-4-farkli-puzzle-p-HBV000013XDKN",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605267"
+  },
+  {
+    "title": "Circle Toys Line Up Single Bul Sırala Öğren - Tek Oyuncu",
+    "price": "373,45 TL",
+    "discount_percentage": 55,
+    "link": "https://www.hepsiburada.com/circle-toys-line-up-single-bul-sirala-ogren-tek-oyuncu-p-HBCV00004CJJZK",
+    "image": "",
+    "source": "hepsiburada",
+    "category": "oyuncak",
+    "last_updated": "2026-05-25T19:57:45.605268"
+  },
+  {
+    "title": "adidas VL COURT BASE Beyaz Kadın Sneaker",
+    "price": "2.286,75 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/adidas-vl-court-base-beyaz-kadin-sneaker-p-HBCV00005QG8QW",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001032554615.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591495"
+  },
+  {
+    "title": "adidas Urban Court Kadın Spor Ayakkabı IF9787",
+    "price": "1.799,40 TL",
+    "discount_percentage": 40,
+    "link": "https://www.hepsiburada.com/adidas-urban-court-kadin-spor-ayakkabi-if9787-p-HBCV00007V3JNF",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000897725717.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591509"
+  },
+  {
+    "title": "adidas Adidas Sportswear JQ9986 Hoops 4.0 Shoes",
+    "price": "1.999,50 TL",
+    "discount_percentage": 50,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-jq9986-hoops-4-0-shoes-p-HBCV00007V3JXF",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000877531154.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591512"
+  },
+  {
+    "title": "adidas Adidas Sportswear IF4076 Court Shoes",
+    "price": "2.542,35 TL",
+    "discount_percentage": 15,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-if4076-court-shoes-p-HBCV00005QG1R4",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001032533039.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591514"
+  },
+  {
+    "title": "adidas Adidas Sportswear IE0927 Court Shoes",
+    "price": "2.336,22 TL",
+    "discount_percentage": 5,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-ie0927-court-shoes-p-HBCV00005QG8OF",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001032554687.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591516"
+  },
+  {
+    "title": "adidas Adidas Sportswear IE8904 Ultimashow 2.0 Ayakkabı",
+    "price": "2.499,00 TL",
+    "discount_percentage": 11,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-ie8904-ultimashow-2-0-ayakkabi-p-HBCV00006JCE4F",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001077782280.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591518"
+  },
+  {
+    "title": "adidas Adidas Sportswear JQ9985 Hoops 4.0 Shoes",
+    "price": "2.599,35 TL",
+    "discount_percentage": 18,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-jq9985-hoops-4-0-shoes-p-HBCV00007OIYKE",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000866830339.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591520"
+  },
+  {
+    "title": "adidas Adidas Performance IF0957 Amplimove Training Shoes",
+    "price": "2.000,60 TL",
+    "discount_percentage": 50,
+    "link": "https://www.hepsiburada.com/adidas-performance-if0957-amplimove-training-shoes-p-HBCV00006JD10N",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000796928967.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591522"
+  },
+  {
+    "title": "adidas Eclyptıx 2000 Günlük Spor Ayakkabı JI2847",
+    "price": "2.961,75 TL",
+    "discount_percentage": 25,
+    "link": "https://www.hepsiburada.com/adidas-eclyptix-2000-gunluk-spor-ayakkabi-ji2847-p-HBCV00007V3JRN",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000897725128.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591523"
+  },
+  {
+    "title": "Puma Essentıals Logo Genç Tişört Erkek için Rahat Kesim ve Nefes Alabilir Kumaş Özellikleriyle",
+    "price": "399,90 TL",
+    "discount_percentage": 35,
+    "link": "https://www.hepsiburada.com/puma-essentials-logo-genc-tisort-erkek-icin-rahat-kesim-ve-nefes-alabilir-kumas-ozellikleriyle-p-HBCV00008MLBX1",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001008454266.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591525"
+  },
+  {
+    "title": "adidas Sportswear Advantage Base 2.0 Spor Ayakkabı IF4135",
+    "price": "2.449,00 TL",
+    "discount_percentage": 30,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-advantage-base-2-0-spor-ayakkabi-if4135-p-HBCV00006JD6BK",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000711468270.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591527"
+  },
+  {
+    "title": "Hummel Perfomance 100 Spor Ayakkabı 900823-2001",
+    "price": "1.739,97 TL",
+    "discount_percentage": 40,
+    "link": "https://www.hepsiburada.com/hummel-perfomance-100-spor-ayakkabi-900823-2001-p-HBCV00008KV3VJ",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001001757634.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591529"
+  },
+  {
+    "title": "Hummel Perfomance 100 Spor Ayakkabı 900823-9124",
+    "price": "1.739,97 TL",
+    "discount_percentage": 40,
+    "link": "https://www.hepsiburada.com/hummel-perfomance-100-spor-ayakkabi-900823-9124-p-HBCV00008KV46W",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001001757346.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591531"
+  },
+  {
+    "title": "adidas Eclyptix 2000 Kadın Günlük Spor Ayakkabı JH6911",
+    "price": "3.009,20 TL",
+    "discount_percentage": 5,
+    "link": "https://www.hepsiburada.com/adidas-eclyptix-2000-kadin-gunluk-spor-ayakkabi-jh6911-p-HBCV00007UCSQX",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000894923242.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591532"
+  },
+  {
+    "title": "adidas Adidas Performance IF0957 Amplimove Training Shoes",
+    "price": "2.000,60 TL",
+    "discount_percentage": 50,
+    "link": "https://www.hepsiburada.com/adidas-performance-if0957-amplimove-training-shoes-p-HBCV00006JD10O",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000796928967.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591534"
+  },
+  {
+    "title": "adidas Adidas Performance JW8652 APWR Backpack Kids",
+    "price": "1.312,26 TL",
+    "discount_percentage": 8,
+    "link": "https://www.hepsiburada.com/adidas-performance-jw8652-apwr-backpack-kids-p-HBCV00009BHJO7",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001100326894.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591536"
+  },
+  {
+    "title": "Ella Bonna Unisex Bebek Çocuk Deniz Ayakkabısı Kaydırmaz Taban Gökkuşağı Renkli Konforlu Tasarım",
+    "price": "499,99 TL",
+    "discount_percentage": 80,
+    "link": "https://www.hepsiburada.com/ella-bonna-unisex-bebek-cocuk-deniz-ayakkabisi-kaydirmaz-taban-gokkusagi-renkli-konforlu-tasarim-p-HBCV00006L7WPO",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000726485584.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591538"
+  },
+  {
+    "title": "adidas Adidas Sportswear GW9252 Grand Court TD Lifestyle Court Casual Shoes",
+    "price": "1.749,50 TL",
+    "discount_percentage": 50,
+    "link": "https://www.hepsiburada.com/adidas-sportswear-gw9252-grand-court-td-lifestyle-court-casual-shoes-p-HBCV00002LHKAZ",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000794640729.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591540"
+  },
+  {
+    "title": "adidas Response Runner Unisex Koşu Ayakkabısı IH6100",
+    "price": "1.999,00 TL",
+    "discount_percentage": 20,
+    "link": "https://www.hepsiburada.com/adidas-response-runner-unisex-kosu-ayakkabisi-ih6100-p-HBCV00007NLDNM",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110000861844210.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591541"
+  },
+  {
+    "title": "adidas BREAKBASE C",
+    "price": "1.949,00 TL",
+    "discount_percentage": 5,
+    "link": "https://www.hepsiburada.com/adidas-breakbase-c-p-HBCV0000BIR6OC",
+    "image": "https://productimages.hepsiburada.net/s/777/222-222/110001175742131.jpg",
+    "source": "hepsiburada",
+    "category": "spor",
+    "last_updated": "2026-05-25T19:57:58.591543"
+  }
+]

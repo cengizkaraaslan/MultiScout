@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, Integer, Float, DateTime, JSON, Text
+from sqlalchemy import create_engine, Column, String, Integer, Float, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from datetime import datetime
@@ -8,9 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
 
 class Deal(Base):
     __tablename__ = "deals"
@@ -25,11 +26,13 @@ class Deal(Base):
     platform = Column(String, index=True)
     source = Column(String)
     last_updated = Column(DateTime, default=datetime.utcnow, index=True)
-    price_history = Column(JSON, default=[])
+    price_history = Column(JSON, default=list)
     deal_score = Column(Float, default=0.0)
+
 
 def init_db():
     Base.metadata.create_all(bind=engine)
+
 
 def get_db():
     db = SessionLocal()
@@ -38,20 +41,16 @@ def get_db():
     finally:
         db.close()
 
+
 def cleanup_duplicates(db: Session):
-    """Veritabanından duplicate ürünleri temizle, en yeni olanı tut"""
     try:
         from sqlalchemy import func
 
-        # Duplicate link'leri bul
         duplicates = db.query(Deal.link, func.count(Deal.id).label('count')).group_by(Deal.link).having(func.count(Deal.id) > 1).all()
 
         deleted_count = 0
-        for link, count in duplicates:
-            # Bu link'e sahip tüm deal'leri al, en yeni olanı hariç sil
+        for link, _count in duplicates:
             deals = db.query(Deal).filter(Deal.link == link).order_by(Deal.last_updated.desc()).all()
-
-            # İlk olanı (en yeni) tut, geri kalanları sil
             for deal in deals[1:]:
                 db.delete(deal)
                 deleted_count += 1
@@ -64,63 +63,109 @@ def cleanup_duplicates(db: Session):
         print(f"[CLEANUP] Hata: {e}", flush=True)
         return 0
 
-def save_deal_to_db(deal: dict, platform: str, db: Session):
-    """Upsert deal: update if exists (price, history), insert if new."""
+
+def _parse_price(value: str) -> float:
+    if not value:
+        return 0.0
+    import re
+    m = re.search(r"\d{1,3}(?:[. ]\d{3})*,\d{2}|\d+,\d{2}|\d+\.\d{2}|\d+", value)
+    if not m:
+        return 0.0
+    raw = m.group(0)
+    if "," in raw:
+        raw = raw.replace(".", "").replace(",", ".")
     try:
-        existing = db.query(Deal).filter(Deal.link == deal.get("link")).first()
+        return float(raw)
+    except ValueError:
+        return 0.0
+
+
+def _compute_deal_score(price: str, discount: int, price_history: list) -> float:
+    discount = max(0, min(int(discount or 0), 100))
+    score = float(discount)
+
+    cur = _parse_price(price)
+    if price_history and cur > 0:
+        old_prices = []
+        for entry in price_history[-10:]:
+            v = _parse_price(entry.get("price", ""))
+            if v > 0:
+                old_prices.append(v)
+        if old_prices:
+            peak = max(old_prices)
+            if peak > cur:
+                drop_pct = ((peak - cur) / peak) * 100
+                score = max(score, drop_pct)
+                if drop_pct > discount + 5:
+                    score += 10
+
+    return round(min(score, 100.0), 2)
+
+
+def _build_price_history_entry(price: str, discount: int) -> dict:
+    return {
+        "date": datetime.utcnow().isoformat(),
+        "price": price,
+        "discount_percentage": discount,
+    }
+
+
+def save_deal_to_db(deal: dict, platform: str, db: Session, commit: bool = True):
+    """Upsert deal. Set commit=False to batch multiple inserts in one transaction."""
+    try:
+        link = deal.get("link")
+        if not link:
+            return None
+
+        existing = db.query(Deal).filter(Deal.link == link).first()
+        new_price = deal.get("price", "")
+        new_discount = int(deal.get("discount_percentage") or 0)
 
         if existing:
-            # Fiyat değişikliği var mı kontrol et
-            if existing.price == deal.get("price"):
-                # Fiyat aynı, sadece varsa indirim yüzdesini güncelle ve çık
-                existing.discount_percentage = deal.get("discount_percentage", existing.discount_percentage)
-                db.commit()
+            if existing.price == new_price:
+                existing.discount_percentage = new_discount or existing.discount_percentage
+                existing.deal_score = _compute_deal_score(existing.price, existing.discount_percentage, existing.price_history or [])
+                if commit:
+                    db.commit()
                 return existing
 
-            # Fiyat değişmiş, güncelleme yap
             existing.title = deal.get("title", existing.title)
-            existing.price = deal.get("price", existing.price)
-            existing.discount_percentage = deal.get("discount_percentage", existing.discount_percentage)
+            existing.price = new_price
+            existing.discount_percentage = new_discount
             existing.image = deal.get("image", existing.image)
             existing.category = deal.get("category", existing.category)
             existing.last_updated = datetime.utcnow()
-            existing.deal_score = deal.get("deal_score", existing.deal_score)
 
-            # Append to price history
-            price_history = existing.price_history or []
-            price_history.append({
-                "date": datetime.utcnow().isoformat(),
-                "price": existing.price,
-                "discount_percentage": existing.discount_percentage
-            })
+            price_history = list(existing.price_history or [])
+            price_history.append(_build_price_history_entry(new_price, new_discount))
             existing.price_history = price_history
+            existing.deal_score = _compute_deal_score(new_price, new_discount, price_history)
 
-            db.commit()
-            db.refresh(existing)
+            if commit:
+                db.commit()
+                db.refresh(existing)
             return existing
 
-        # Create new deal
+        history = [_build_price_history_entry(new_price, new_discount)]
         new_deal = Deal(
             title=deal.get("title", ""),
-            price=deal.get("price", ""),
-            discount_percentage=deal.get("discount_percentage", 0),
-            link=deal.get("link", ""),
+            price=new_price,
+            discount_percentage=new_discount,
+            link=link,
             image=deal.get("image", ""),
             category=deal.get("category", ""),
             platform=platform,
             source=deal.get("source", ""),
-            deal_score=deal.get("deal_score", 0.0),
-            price_history=[{
-                "date": datetime.utcnow().isoformat(),
-                "price": deal.get("price", ""),
-                "discount_percentage": deal.get("discount_percentage", 0)
-            }]
+            deal_score=_compute_deal_score(new_price, new_discount, history),
+            price_history=history,
         )
         db.add(new_deal)
-        db.commit()
-        db.refresh(new_deal)
+        if commit:
+            db.commit()
+            db.refresh(new_deal)
         return new_deal
     except Exception as e:
-        db.rollback()
-        print(f"[ERROR] Deal kaydedilemedi: {e}")
+        if commit:
+            db.rollback()
+        print(f"[ERROR] Deal kaydedilemedi: {e}", flush=True)
         return None
